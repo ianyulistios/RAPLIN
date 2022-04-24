@@ -19,7 +19,7 @@ The library functions:
 # Installation
 
 ```
-$ go get github.com/ianyulistios/rapu
+$ go get github.com/ianyulistios/raplin
 ```
 # Why RAPLIN?
 
@@ -27,29 +27,29 @@ With Raplin, you can configure rabbit without complex settings:
 
 - **Make Instance Init**
 ```
-initRaplin := rapu.InitRaplin("127.0.0.1", "5672", "guest", "guest", 3)
+initRaplin := raplin.InitRaplin("127.0.0.1", "5672", "guest", "guest", 3)
 ```
 
 - **Connect To RabbitMQ Server**
 ```
-initRaplin := rapu.InitRaplin("127.0.0.1", "5672", "guest", "guest", 3)
+initRaplin := raplin.InitRaplin("127.0.0.1", "5672", "guest", "guest", 3)
 conn, err := initRaplin.RabbitConnection()
 ```
 
 - **Declare Exchange**
 ```
 var (
-	exchangeSetting     rapu.RabbitDataDeclare
-	exchangeSettingBulk []rapu.RabbitDataDeclare
+	exchangeSetting     raplin.RabbitDataDeclare
+	exchangeSettingBulk []raplin.RabbitDataDeclare
     )
 
-    initRaplin := rapu.InitRaplin("127.0.0.1", "5672", "guest", "guest", 3)
+    initRaplin := raplin.InitRaplin("127.0.0.1", "5672", "guest", "guest", 3)
     conn, err := initRaplin.RabbitConnection()
 
     if err != nil {
         fmt.Println(err.Error())
     }else {
-        exchangeSetting := rapu.RabbitDataDeclare{ExchangeName: "test-rabbitmq", ExchangeType: "direct", DurableExchange: false, AutoDeleteExchange: true, InternalExchange: false, NoWaitExchange: false, ArgsExchange: nil}
+        exchangeSetting := raplin.RabbitDataDeclare{ExchangeName: "test-rabbitmq", ExchangeType: "direct", DurableExchange: false, AutoDeleteExchange: true, InternalExchange: false, NoWaitExchange: false, ArgsExchange: nil}
 
         exchangeSettingBulk = append(exchangeSettingBulk, exchangeSetting)
         _ := conn.ExchangeDeclaration(exchangeSettingBulk)
@@ -57,27 +57,27 @@ var (
 ```
 - **Declare Queue**
 ```
-initRaplin := rapu.InitRaplin("127.0.0.1", "5672", "guest", "guest", 3)
+initRaplin := raplin.InitRaplin("127.0.0.1", "5672", "guest", "guest", 3)
 conn, err := initRaplin.RabbitConnection()
 
 if err != nil {
    fmt.Println(err.Error())
 } else {
-    queueSetting := rapu.RabbitDataDeclare{QueueName: "TESTING QUEUE", DurableQueue: false, AutoDeleteQueue: true, ExclusiveQueue: false, NoWaitQueue: false, ArgsQueue: nil}
+    queueSetting := raplin.RabbitDataDeclare{QueueName: "TESTING QUEUE", DurableQueue: false, AutoDeleteQueue: true, ExclusiveQueue: false, NoWaitQueue: false, ArgsQueue: nil}
     _ := conn.DeclareQueue(queueSetting)
 }
 ```
 **Bind Queue**
 ```
 var (
-	exchangeSettingBulk []rapu.RabbitDataDeclare
+	exchangeSettingBulk []raplin.RabbitDataDeclare
     )
-    initRaplin := rapu.InitRaplin("127.0.0.1", "5672", "guest", "guest", 3)
+    initRaplin := raplin.InitRaplin("127.0.0.1", "5672", "guest", "guest", 3)
     conn, err := initRaplin.RabbitConnection()
     if err != nil {
         fmt.Println(err.Error())
     } else {
-        rabbitSetting := rapu.RabbitDataDeclare{ExchangeName: "test-rabbitmq-bind", ExchangeType: "direct", DurableExchange: false, AutoDeleteExchange: true, InternalExchange: false, NoWaitExchange: false, ArgsExchange: nil, QueueName: "TESTING QUEUE BIND", DurableQueue: false, AutoDeleteQueue: true, ExclusiveQueue: false, NoWaitQueue: false, ArgsQueue: nil, NoWaitBind: false, KeyBind: ""}
+        rabbitSetting := raplin.RabbitDataDeclare{ExchangeName: "test-rabbitmq-bind", ExchangeType: "direct", DurableExchange: false, AutoDeleteExchange: true, InternalExchange: false, NoWaitExchange: false, ArgsExchange: nil, QueueName: "TESTING QUEUE BIND", DurableQueue: false, AutoDeleteQueue: true, ExclusiveQueue: false, NoWaitQueue: false, ArgsQueue: nil, NoWaitBind: false, KeyBind: ""}
         exchangeSettingBulk = append(exchangeSettingBulk, rabbitSetting)
 
         _ := conn.ExchangeDeclaration(exchangeSettingBulk)
@@ -89,14 +89,14 @@ var (
 **Complex 1:1 Queue, Exchange, Bind**
 ```
     var (
-        exchangeSettingBulk []rapu.RabbitDataDeclare
+        exchangeSettingBulk []raplin.RabbitDataDeclare
     )
-    initRaplin := rapu.InitRaplin("127.0.0.1", "5672", "guest", "guest", 3)
+    initRaplin := raplin.InitRaplin("127.0.0.1", "5672", "guest", "guest", 3)
     conn, err := initRaplin.RabbitConnection()
     if err != nil {
         fmt.Println(err.Error())
     } else {
-        rabbitSetting := rapu.RabbitDataDeclare{ExchangeName: "test-rabbitmq-complex", ExchangeType: "direct", DurableExchange: false, AutoDeleteExchange: true, InternalExchange: false, NoWaitExchange: false, ArgsExchange: nil, QueueName: "TESTING QUEUE COMPLEX", DurableQueue: false, AutoDeleteQueue: true, ExclusiveQueue: false, NoWaitQueue: false, ArgsQueue: nil, NoWaitBind: false, KeyBind: ""}
+        rabbitSetting := raplin.RabbitDataDeclare{ExchangeName: "test-rabbitmq-complex", ExchangeType: "direct", DurableExchange: false, AutoDeleteExchange: true, InternalExchange: false, NoWaitExchange: false, ArgsExchange: nil, QueueName: "TESTING QUEUE COMPLEX", DurableQueue: false, AutoDeleteQueue: true, ExclusiveQueue: false, NoWaitQueue: false, ArgsQueue: nil, NoWaitBind: false, KeyBind: ""}
         exchangeSettingBulk = append(exchangeSettingBulk, rabbitSetting)
         
         conn.ExchangeDeclaration(exchangeSettingBulk)
